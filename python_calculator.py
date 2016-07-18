@@ -1,27 +1,57 @@
 from tkinter import *
 import sys
 
-def num_press(num):
-    print(num)
+class Calculator():
+    def __init__(self):
+        self.total = 0
+        self.current = ""
+        self.new_num = True
+        self.op_pending = False
+        self.op = ""
+        self.eq = False
 
-def clear():
-    text.delete(0,END)
-    return
+    def key_pressed(self, key):
+        #if 0 <= int(key) <= 9:
 
-def getNum(num):
-    print("What is the %s number?" % (num))
-    number = int(sys.stdin.readline())
-    return number
+        try:
+            # check if the key pressed is a numer
+            if isinstance(int(key), int):
+                print(key)
+        except ValueError:
+            if key == "+" or key == "-" or key == "*" or key == "/":
+                print("Operation: ", key)
+            elif key == ".":
+                print(key)
+            elif key == "(" or key == ")":
+                print(key)
+            elif key == "=":
+                print("equals")
+            elif key == "C":
+                self.clear()
+            elif key == "CE":
+                self.clear()
 
-def add(n1,n2):
-    print("%i + %i =" %(n1,n2), (n1+n2))
-def subtract(n1,n2):
-    print("%i - %i =" %(n1,n2), (n1-n2))
-def multiply(n1,n2):
-    print("%i * %i =" %(n1,n2), (n1*n2))
-def divide(n1,n2):
-    print("%i / %i =" %(n1,n2), (n1/n2))
 
+
+    def clear(self):
+        text.delete(0,END)
+        return
+
+    def getNum(num):
+        print("What is the %s number?" % (num))
+        number = int(sys.stdin.readline())
+        return number
+
+    def add(n1,n2):
+        print("%i + %i =" %(n1,n2), (n1+n2))
+    def subtract(n1,n2):
+        print("%i - %i =" %(n1,n2), (n1-n2))
+    def multiply(n1,n2):
+        print("%i * %i =" %(n1,n2), (n1*n2))
+    def divide(n1,n2):
+        print("%i / %i =" %(n1,n2), (n1/n2))
+
+calculator = Calculator()
 root = Tk()
 root.title("Calculator")
 frame =Frame(root)
@@ -32,7 +62,7 @@ text = Entry(frame,bd=20, insertwidth=1,font=30)
 text.grid(row = 0, column = 0, columnspan = 5)
 
 buttons = ["1","2","3","(",")",
-           "4","5","6","x","/",
+           "4","5","6","*","/",
            "7","8","9","+","-",
            ".","0","CE","C","="]
 i=0
@@ -41,7 +71,7 @@ button = []
 
 for rows in range (1,5):
     for columns in range(5):
-       button.append(Button(frame,text=buttons[i],padx=16,pady=16,bd=6,fg="black",command=lambda x=i: num_press(buttons[x])))
+       button.append(Button(frame,text=buttons[i],padx=16,pady=16,bd=6,fg="black",command=lambda x=i: calculator.key_pressed(buttons[x])))
        button[i].grid(row = rows, column = columns)
        i+=1
 
@@ -82,4 +112,4 @@ elif input == "4":
 elif input == "5":
     print("Closing calculator")
     sys.exit
-'''
+    '''
