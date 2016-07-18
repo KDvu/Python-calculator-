@@ -9,6 +9,7 @@ class Calculator():
         self.op_pending = False
         self.op = ""
         self.eq = False
+        self.current_no = 1
 
     def key_pressed(self, key):
         #if 0 <= int(key) <= 9:
@@ -17,13 +18,19 @@ class Calculator():
             # check if the key pressed is a numer
             if isinstance(int(key), int):
                 print(key)
+                self.current_no+=1
+                text.insert(self.current_no,key)
         except ValueError:
             if key == "+" or key == "-" or key == "*" or key == "/":
                 print("Operation: ", key)
             elif key == ".":
                 print(key)
+                self.current_no+=1
+                text.insert(self.current_no,key)
             elif key == "(" or key == ")":
                 print(key)
+                self.current_no+=1
+                text.insert(self.current_no,key)
             elif key == "=":
                 print("equals")
             elif key == "C":
