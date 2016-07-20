@@ -27,7 +27,6 @@ class Calculator():
                     self.new_num = False
 
                 self.current = float(display.get())
-
         except ValueError:
             if key == "+" or key == "-" or key == "*" or key == "/":
                 self.operation(key)
@@ -35,6 +34,8 @@ class Calculator():
                 self.current_no+=1
                 self.new_num = False
                 display.insert(self.current_no,key)
+            elif key == "/-":
+                self.sign()
             elif key == "<":
                 self.new_num = False
                 self.deleteNum()
@@ -45,17 +46,6 @@ class Calculator():
             elif key == "CE":
                 self.clearAll()
 
-    def deleteNum(self):
-        s = display.get()
-        s = s[:-1]
-
-        if not s:
-            self.changeDisplay(0)
-        else:
-            self.changeDisplay(s)
-
-        self.current = float(display.get())
-
     def operation(self,op):
         if self.op_pending:
             self.calculate()
@@ -65,6 +55,10 @@ class Calculator():
         self.op_pending = True
         self.op = op
         self.eq = False
+
+    def sign(self):
+        self.current = -float(display.get())
+        self.changeDisplay(int(self.current))
 
     def calculate(self):
         if self.op == "+":
@@ -91,6 +85,15 @@ class Calculator():
         display.delete(0,END)
         display.insert(0, value)
 
+    def deleteNum(self):
+        s = display.get()
+        s = s[:-1]
+        if not s:
+            self.changeDisplay(0)
+        else:
+            self.changeDisplay(s)
+        self.current = float(display.get())
+
     def clear(self):
         self.eq = False
         self.current = 0
@@ -103,21 +106,6 @@ class Calculator():
         self.clear()
         self.total = 0
 
-
-    def getNum(num):
-        print("What is the %s number?" % (num))
-        number = int(sys.stdin.readline())
-        return number
-
-    def add(n1,n2):
-        print("%i + %i =" %(n1,n2), (n1+n2))
-    def subtract(n1,n2):
-        print("%i - %i =" %(n1,n2), (n1-n2))
-    def multiply(n1,n2):
-        print("%i * %i =" %(n1,n2), (n1*n2))
-    def divide(n1,n2):
-        print("%i / %i =" %(n1,n2), (n1/n2))
-
 root = Tk()
 root.title("Calculator")
 frame =Frame(root)
@@ -129,7 +117,7 @@ display.grid(row = 0, column = 0, columnspan = 5)
 
 calculator = Calculator(display)
 
-buttons = ["1","2","3","-","<",
+buttons = ["1","2","3","/-","<",
            "4","5","6","*","/",
            "7","8","9","+","-",
            ".","0","CE","C","="]
