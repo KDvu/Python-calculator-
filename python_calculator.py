@@ -21,10 +21,13 @@ class Calculator():
                 if display.get() == "0" or self.new_num == True:
                     display.delete(0,END)
                     display.insert(self.current_no,key)
-                else:
                     self.new_num = False
+                else:
                     display.insert(self.current_no,key)
+                    self.new_num = False
+
                 self.current = float(display.get())
+
         except ValueError:
             if key == "+" or key == "-" or key == "*" or key == "/":
                 self.operation(key)
@@ -32,15 +35,26 @@ class Calculator():
                 self.current_no+=1
                 self.new_num = False
                 display.insert(self.current_no,key)
-            elif key == "(" or key == ")":
-                self.current_no+=1
-                display.insert(self.current_no,key)
+            elif key == "<":
+                self.new_num = False
+                self.deleteNum()
             elif key == "=":
                 self.calculateTotal()
             elif key == "C":
                 self.clear()
             elif key == "CE":
                 self.clearAll()
+
+    def deleteNum(self):
+        s = display.get()
+        s = s[:-1]
+
+        if not s:
+            self.changeDisplay(0)
+        else:
+            self.changeDisplay(s)
+
+        self.current = float(display.get())
 
     def operation(self,op):
         if self.op_pending:
@@ -115,7 +129,7 @@ display.grid(row = 0, column = 0, columnspan = 5)
 
 calculator = Calculator(display)
 
-buttons = ["1","2","3","(",")",
+buttons = ["1","2","3","-","<",
            "4","5","6","*","/",
            "7","8","9","+","-",
            ".","0","CE","C","="]
