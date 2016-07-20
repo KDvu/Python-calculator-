@@ -13,7 +13,6 @@ class Calculator():
         self.changeDisplay(0)
 
     def key_pressed(self, key):
-        #if 0 <= int(key) <= 9:
         try:
             # check if the key pressed is a numer
             if isinstance(int(key), int):
@@ -81,6 +80,7 @@ class Calculator():
     def clear(self):
         self.eq = False
         self.current = 0
+        self.current_no = 1
         self.new_num = True
         display.delete(0,END)
         display.insert(0, 0)
