@@ -58,6 +58,12 @@ class Calculator():
     def calculate(self):
         if self.op == "+":
             self.total += self.current
+        elif self.op == "-":
+            self.total -= self.current
+        elif self.op == "*":
+            self.total *= self.current
+        elif self.op == "/":
+            self.total /= self.current
         self.new_num = True
         self.op_pending = False
         self.changeDisplay(self.total)
