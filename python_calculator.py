@@ -48,13 +48,12 @@ class Calculator():
     def operation(self,op):
         if self.op_pending:
             self.calculate()
-            self.changeDisplay(self.total)
-            self.new_num = True
-        else:
+        elif not self.eq:
             self.total = self.current
-            self.changeDisplay(0)
+        self.new_num = True
         self.op_pending = True
         self.op = op
+        self.eq = False
 
     def calculate(self):
         if self.op == "+":
