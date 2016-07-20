@@ -25,7 +25,7 @@ class Calculator():
                 else:
                     self.new_num = False
                     display.insert(self.current_no,key)
-                self.current = int(display.get())
+                self.current = float(display.get())
                 print(self.current)
         except ValueError:
             if key == "+" or key == "-" or key == "*" or key == "/":
