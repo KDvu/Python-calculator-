@@ -18,7 +18,12 @@ class Calculator():
             # check if the key pressed is a numer
             if isinstance(int(key), int):
                 self.current_no+=1
-                display.insert(self.current_no,key)
+
+                if display.get() == "0":
+                    display.delete(0,END)
+                    display.insert(self.current_no,key)
+                else:
+                    display.insert(self.current_no,key)
                 self.current = int(display.get())
                 print(self.current)
         except ValueError:
@@ -41,6 +46,7 @@ class Calculator():
 
     def operation(self,op):
         if self.op_pending:
+            self.calculate()
             self.changeDisplay(self.total)
         else:
             self.total = self.current
@@ -48,9 +54,12 @@ class Calculator():
         self.op_pending = True
         self.op = op
 
-    def calculateTotal(self):
+    def calculate(self):
         if self.op == "+":
             self.total += self.current
+
+    def calculateTotal(self):
+        self.calculate()
         self.changeDisplay(self.total)
 
     def changeDisplay(self,value):
