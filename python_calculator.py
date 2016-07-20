@@ -2,7 +2,7 @@ from tkinter import *
 import sys
 
 class Calculator():
-    def __init__(self):
+    def __init__(self,display):
         self.total = 0
         self.current = 0
         self.new_num = True
@@ -10,6 +10,7 @@ class Calculator():
         self.op = ""
         self.eq = False
         self.current_no = 1
+        self.changeDisplay(0)
 
     def key_pressed(self, key):
         #if 0 <= int(key) <= 9:
@@ -18,9 +19,12 @@ class Calculator():
             if isinstance(int(key), int):
                 self.current_no+=1
                 display.insert(self.current_no,key)
+                self.current = int(display.get())
+                print(self.current)
         except ValueError:
             if key == "+" or key == "-" or key == "*" or key == "/":
                 print("Operation: ", key)
+                self.operation(key)
             elif key == ".":
                 self.current_no+=1
                 display.insert(self.current_no,key)
@@ -28,19 +32,34 @@ class Calculator():
                 self.current_no+=1
                 display.insert(self.current_no,key)
             elif key == "=":
+                self.calculateTotal()
                 print("equals")
             elif key == "C":
                 self.clear()
             elif key == "CE":
                 self.clear()
 
+    def operation(self,op):
+        if self.op_pending:
+            self.changeDisplay(self.total)
+        else:
+            self.total = self.current
+            self.changeDisplay(0)
+        self.op_pending = True
+        self.op = op
+
+    def calculateTotal(self):
+        if self.op == "+":
+            self.total += self.current
+        self.changeDisplay(self.total)
+
     def changeDisplay(self,value):
-        self.clear()
+        display.delete(0,END)
         display.insert(0, value)
 
     def clear(self):
         display.delete(0,END)
-        return
+        display.insert(0, 0)
 
     def getNum(num):
         print("What is the %s number?" % (num))
@@ -56,7 +75,6 @@ class Calculator():
     def divide(n1,n2):
         print("%i / %i =" %(n1,n2), (n1/n2))
 
-calculator = Calculator()
 root = Tk()
 root.title("Calculator")
 frame =Frame(root)
@@ -65,6 +83,8 @@ frame.grid()
 display = Entry(frame,bd=20, insertwidth=1,font=30)
 #text.config(state=DISABLED)
 display.grid(row = 0, column = 0, columnspan = 5)
+
+calculator = Calculator(display)
 
 buttons = ["1","2","3","(",")",
            "4","5","6","*","/",
