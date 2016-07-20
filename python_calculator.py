@@ -18,7 +18,7 @@ class Calculator():
             # check if the key pressed is a numer
             if isinstance(int(key), int):
                 self.current_no+=1
-
+                self.eq = False
                 if display.get() == "0" or self.new_num == True:
                     display.delete(0,END)
                     display.insert(self.current_no,key)
@@ -60,6 +60,7 @@ class Calculator():
             self.total += self.current
         self.new_num = True
         self.op_pending = False
+        self.changeDisplay(self.total)
 
     def calculateTotal(self):
         self.eq = True
