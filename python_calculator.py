@@ -33,6 +33,7 @@ class Calculator():
                 self.operation(key)
             elif key == ".":
                 self.current_no+=1
+                self.new_num = False
                 display.insert(self.current_no,key)
             elif key == "(" or key == ")":
                 self.current_no+=1
@@ -43,7 +44,7 @@ class Calculator():
             elif key == "C":
                 self.clear()
             elif key == "CE":
-                self.clear()
+                self.clearAll()
 
     def operation(self,op):
         if self.op_pending:
@@ -81,8 +82,16 @@ class Calculator():
         display.insert(0, value)
 
     def clear(self):
+        self.eq = False
+        self.current = 0
+        self.new_num = True
         display.delete(0,END)
         display.insert(0, 0)
+
+    def clearAll(self):
+        self.clear()
+        self.total = 0
+
 
     def getNum(num):
         print("What is the %s number?" % (num))
