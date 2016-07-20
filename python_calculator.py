@@ -19,10 +19,11 @@ class Calculator():
             if isinstance(int(key), int):
                 self.current_no+=1
 
-                if display.get() == "0":
+                if display.get() == "0" or self.new_num == True:
                     display.delete(0,END)
                     display.insert(self.current_no,key)
                 else:
+                    self.new_num = False
                     display.insert(self.current_no,key)
                 self.current = int(display.get())
                 print(self.current)
@@ -48,6 +49,7 @@ class Calculator():
         if self.op_pending:
             self.calculate()
             self.changeDisplay(self.total)
+            self.new_num = True
         else:
             self.total = self.current
             self.changeDisplay(0)
