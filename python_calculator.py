@@ -4,7 +4,7 @@ import sys
 class Calculator():
     def __init__(self):
         self.total = 0
-        self.current = ""
+        self.current = 0
         self.new_num = True
         self.op_pending = False
         self.op = ""
@@ -13,24 +13,20 @@ class Calculator():
 
     def key_pressed(self, key):
         #if 0 <= int(key) <= 9:
-
         try:
             # check if the key pressed is a numer
             if isinstance(int(key), int):
-                print(key)
                 self.current_no+=1
-                text.insert(self.current_no,key)
+                display.insert(self.current_no,key)
         except ValueError:
             if key == "+" or key == "-" or key == "*" or key == "/":
                 print("Operation: ", key)
             elif key == ".":
-                print(key)
                 self.current_no+=1
-                text.insert(self.current_no,key)
+                display.insert(self.current_no,key)
             elif key == "(" or key == ")":
-                print(key)
                 self.current_no+=1
-                text.insert(self.current_no,key)
+                display.insert(self.current_no,key)
             elif key == "=":
                 print("equals")
             elif key == "C":
@@ -38,10 +34,12 @@ class Calculator():
             elif key == "CE":
                 self.clear()
 
-
+    def changeDisplay(self,value):
+        self.clear()
+        display.insert(0, value)
 
     def clear(self):
-        text.delete(0,END)
+        display.delete(0,END)
         return
 
     def getNum(num):
@@ -64,9 +62,9 @@ root.title("Calculator")
 frame =Frame(root)
 frame.grid()
 
-text = Entry(frame,bd=20, insertwidth=1,font=30)
+display = Entry(frame,bd=20, insertwidth=1,font=30)
 #text.config(state=DISABLED)
-text.grid(row = 0, column = 0, columnspan = 5)
+display.grid(row = 0, column = 0, columnspan = 5)
 
 buttons = ["1","2","3","(",")",
            "4","5","6","*","/",
