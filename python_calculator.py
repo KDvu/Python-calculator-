@@ -58,10 +58,16 @@ class Calculator():
     def calculate(self):
         if self.op == "+":
             self.total += self.current
+        self.new_num = True
+        self.op_pending = False
 
     def calculateTotal(self):
-        self.calculate()
-        self.changeDisplay(self.total)
+        self.eq = True
+        if self.op_pending:
+            self.calculate()
+            self.changeDisplay(self.total)
+        else:
+            self.total = int(display.get())
 
     def changeDisplay(self,value):
         display.delete(0,END)
