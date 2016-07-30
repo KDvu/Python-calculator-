@@ -103,13 +103,16 @@ class Calculator():
         self.current = float(self.display.get())
 
     def clear(self):
-        self.eq = False
         self.current = 0
         self.current_no = 1
         self.new_num = True
+        self.display.config(state="normal")
         self.display.delete(0,END)
         self.display.insert(0, 0)
+        self.display.config(state="disabled")
 
     def clearAll(self):
         self.clear()
+        self.eq = False
         self.total = 0
+        self.op_pending = False
