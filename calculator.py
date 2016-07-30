@@ -85,7 +85,7 @@ class Calculator():
             self.calculate()
             self.changeDisplay(self.total)
         else:
-            self.total = int(self.display.get())
+            self.total = float(self.display.get())
 
     def changeDisplay(self,value):
         self.display.config(state="normal")
