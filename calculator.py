@@ -19,11 +19,15 @@ class Calculator():
                 self.current_no+=1
                 self.eq = False
                 if self.display.get() == "0" or self.new_num == True:
+                    self.display.config(state="normal")
                     self.display.delete(0,END)
                     self.display.insert(self.current_no,key)
+                    self.display.config(state="disabled")
                     self.new_num = False
                 else:
+                    self.display.config(state="normal")
                     self.display.insert(self.current_no,key)
+                    self.display.config(state="disabled")
                     self.new_num = False
 
                 self.current = float(self.display.get())
@@ -33,7 +37,9 @@ class Calculator():
             elif key == ".":
                 self.current_no+=1
                 self.new_num = False
-                self.display.insert(self.current_no,key)
+                self.display.config(state="normal")
+                self.display.insert(self.current_no, key)
+                self.display.config(state="disabled")
             elif key == "/-":
                 self.sign()
             elif key == "<":
@@ -82,8 +88,10 @@ class Calculator():
             self.total = int(self.display.get())
 
     def changeDisplay(self,value):
+        self.display.config(state="normal")
         self.display.delete(0,END)
         self.display.insert(0, value)
+        self.display.config(state="disabled")
 
     def deleteNum(self):
         s = self.display.get()
