@@ -10,7 +10,7 @@ frame = Frame(root)
 frame.grid()
 
 display = Entry(frame,bd=20, insertwidth=1,font=30)
-#text.config(state=DISABLED)
+display.config(state="disabled")
 display.grid(row = 0, column = 0, columnspan = 5)
 
 calculator = Calculator(display)
